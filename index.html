@@ -1,7 +1,40 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
 <body>
-  <h1>Hello World</h1>
-  <p>I'm hosted with GitHub Pages.</p>
+  <form>
+    <input type="text" name="dt" />
+    <span class="result"></span>
+  </form>
+
+  <script type="text/javascript">
+    $(function () {
+      $("[name='dt']").on("input", function (e) {
+        var val = $(this).val();
+
+        try {
+          var result = /^(\w{3})\.\s*(\d{2})\,\s*(\d{4})\s*\-\s*(\d{2}):(\d{2}):(\d{2})(\s*GMT)?$/.exec(val);
+          //console.log(result);
+
+          if (result && result != null && result.length >= 6) {
+            var str = result[2] + " " + result[1] + " " + result[3] + " " + result[4] + ":" + result[5] + ":" + result[6];
+            if (val.indexOf("GMT") == -1) {
+              str = str + " GMT";
+            } else {
+              str = str + result[7];
+            }
+
+            //console.log(str);
+            var dt = Date.parse(str);
+            $(".result").text(dt);
+          }
+        } catch {
+
+        }
+      });
+    });
+  </script>
 </body>
 </html>
